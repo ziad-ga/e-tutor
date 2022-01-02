@@ -64,7 +64,7 @@ class _StudentQuizState extends State<StudentQuiz> {
               //Question count
               Text('${_currentQuestion + 1}/${_questionList.length}',style: const TextStyle(fontWeight: FontWeight.bold),),
 
-              SizedBox(height: 0.1.sh,),
+              SizedBox(height: 0.07.sh,),
 
               //Navigation buttons
               Row(
@@ -198,10 +198,19 @@ class _StudentQuizState extends State<StudentQuiz> {
 
   Future<void> _showAnswer() async {
     await showDialog(context: context, builder: (BuildContext context) {
-      return SimpleDialog(title: Center(child: Text('Answer')), children: [
+      return SimpleDialog(
+        backgroundColor: Colors.black,
+          title: const Center(child: Text('Answer', style: TextStyle(color: Colors.white),)), children: [
         Center(child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(_questionList[_currentQuestion].answer),
+          padding:  EdgeInsets.fromLTRB(0.01.sw, 0.01.sh, 0.01.sw, 0.07.sh),
+          child: DecoratedBox(
+              decoration: BoxDecoration(borderRadius: MY_BORDER_RADIUS,color: Colors.white),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                    width: 0.5.sw,
+                    child: Text(_questionList[_currentQuestion].answer,style: TextStyle(fontSize: 0.04.sw,color: Colors.black),)),
+              )),
         ))
       ],);
     });
