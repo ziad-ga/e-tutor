@@ -45,7 +45,7 @@ List<dynamic> innitQuestions(int n) {
   List<dynamic> questions = [];
   for (int i = 0; i < n; i++) {
     questions
-        .add(WrittenQuestion(question: 'Question demo', answer: 'Answer demo'));
+        .add(WrittenQuestion(question: 'Question demo?', answer: 'Answer demo'));
   }
   return questions;
 }

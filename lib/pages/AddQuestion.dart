@@ -194,18 +194,18 @@ class _AddQuestionState extends State<AddQuestion> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _createOptionField('Answer', _answerController),
+            createOptionField('Answer', _answerController),
             SizedBox(
               height: 0.02.sh,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _createOptionField('Option 1', _optionControllerList[0]),
+                createOptionField('Option 1', _optionControllerList[0]),
                 SizedBox(
                   width: 0.04.sw,
                 ),
-                _createOptionField('Option 2', _optionControllerList[1])
+                createOptionField('Option 2', _optionControllerList[1])
               ],
             ),
             SizedBox(
@@ -214,11 +214,11 @@ class _AddQuestionState extends State<AddQuestion> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _createOptionField('Option 3', _optionControllerList[2]),
+                createOptionField('Option 3', _optionControllerList[2]),
                 SizedBox(
                   width: 0.04.sw,
                 ),
-                _createOptionField('Option 4', _optionControllerList[3])
+                createOptionField('Option 4', _optionControllerList[3])
               ],
             )
           ],
@@ -226,7 +226,7 @@ class _AddQuestionState extends State<AddQuestion> {
   }
 
   //
-  Center _createOptionField(String text, TextEditingController controller) {
+  Center createOptionField(String text, TextEditingController controller) {
     return Center(
         child: SizedBox(
             width: 0.4.sw,

@@ -78,6 +78,8 @@ class _StudentLessonState extends State<StudentLesson> {
                     visible: _showLesson,
                     child: Column(
                       children: [
+
+                        //Lesson title
                         DecoratedBox(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100.sp),
@@ -96,6 +98,8 @@ class _StudentLessonState extends State<StudentLesson> {
                             )),
                           ),
                         ),
+
+                        //Lesson content
                         DecoratedBox(
                           decoration: const BoxDecoration(
                             color: Colors.white,
@@ -122,9 +126,12 @@ class _StudentLessonState extends State<StudentLesson> {
                             ),
                           ),
                         ),
+
                         SizedBox(
                           height: 0.02.sh,
                         ),
+
+                        //Quiz button
                         Align(
                             alignment: Alignment.centerRight,
                             child: createQuizButton()),
@@ -140,7 +147,9 @@ class _StudentLessonState extends State<StudentLesson> {
   ElevatedButton createQuizButton() {
     return ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/StudentLesson/StudentQuiz');
+          Navigator.pushNamed(context, '/StudentLesson/StudentQuiz',
+              arguments: _lessonChoice!
+                  .questionList); //Navigate to quiz page and attach the list of questions in the current lesson
         },
         style: ElevatedButton.styleFrom(
             fixedSize: Size(0.3.sw, 0.08.sh),
