@@ -86,7 +86,7 @@ class _HomeState extends State<Home> {
                       //Student Button
                       IconButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/StudentMenu');
+                          Navigator.pushNamed(context, '/StudentLesson');
                         },
                         padding: EdgeInsets.zero,
                         hoverColor: Colors.lightBlueAccent[100],

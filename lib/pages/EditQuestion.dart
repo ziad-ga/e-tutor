@@ -197,9 +197,7 @@ class _EditQuestionState extends State<EditQuestion> {
                     for (var controller in _optionControllerList) {
                       controller.clear();
                     }
-                  } else {
-
-                  }
+                  } else {}
                 });
                 _questionController.clear();
                 _answerController.clear();

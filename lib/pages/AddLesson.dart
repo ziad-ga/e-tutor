@@ -30,7 +30,7 @@ class _AddLessonState extends State<AddLesson> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: myAppBar,
+        appBar: createAppBar('Enjoy your lesson'),
         backgroundColor: MY_BACKGROUND_COLOR,
         body: SingleChildScrollView(
           child: Padding(

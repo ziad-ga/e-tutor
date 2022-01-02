@@ -15,6 +15,14 @@ AppBar myAppBar = AppBar(
   centerTitle: true,
 );
 
+AppBar createAppBar(String s) {
+  return AppBar(
+    title: Text(s),
+    backgroundColor: const Color(0xFF000000),
+    centerTitle: true,
+  );
+}
+
 //COLORS
 const Color MY_BACKGROUND_COLOR = Color(0xE9FFFFFF),
     MY_BUTTON_COLOR = Color(0xFFCBC998),
