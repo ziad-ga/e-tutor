@@ -37,6 +37,7 @@ class _StudentLessonState extends State<StudentLesson> {
             child: Column(
               children: [
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+
                   //Choose course button
                   createMenu('Courses', courseNames, _courseValue,
                       (String? newValue) {
@@ -71,14 +72,15 @@ class _StudentLessonState extends State<StudentLesson> {
                     });
                   }, _showLessonButton)
                 ]),
+
                 SizedBox(
                   height: 0.03.sh,
                 ),
+
                 Visibility(
                     visible: _showLesson,
                     child: Column(
                       children: [
-
                         //Lesson title
                         DecoratedBox(
                           decoration: BoxDecoration(

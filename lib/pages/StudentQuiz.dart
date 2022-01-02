@@ -1,6 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:collection';
 import 'package:etutor_project/Question.dart';
 import 'package:flutter/material.dart';
 import 'package:etutor_project/global.dart';
@@ -22,10 +21,7 @@ class _StudentQuizState extends State<StudentQuiz> {
 
   @override
   Widget build(BuildContext context) {
-    data = ModalRoute
-        .of(context)
-        ?.settings
-        .arguments;
+    data = ModalRoute.of(context)?.settings.arguments;
     _questionList = (data as List<dynamic>);
     return Scaffold(
       appBar: createAppBar('Quiz'),
@@ -33,52 +29,68 @@ class _StudentQuizState extends State<StudentQuiz> {
       body: SingleChildScrollView(
         child: Padding(
           padding: myPadding,
-          child: Column(
-            children: [
-              _showCurrentQuestion(),
-              SizedBox(
-                height: 0.05.sh,
-              ),
+          child: (_questionList.isEmpty) //If there are no questions in the lesson only display a message, else build the page
+              ? Center(
+                  child: Text(
+                  'This lesson doesnt have any questions yet, come back later!',
+                  style: TextStyle(color: Colors.black, fontSize: 0.05.sw),
+                ))
+              : Column(
+                  children: [
 
-              //Show answer button
-              ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _showAnswer();
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: Size(0.4.sw, 0.08.sh),
-                      primary: const Color(0xFF000000),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: MY_BORDER_RADIUS)),
-                  child: const Center(
-                    child: Text(
-                      'Show Answer',
-                      style: TextStyle(color: Colors.white),
+                    //Show the current question
+                    _showCurrentQuestion(),
+
+                    SizedBox(
+                      height: 0.05.sh,
                     ),
-                  )),
 
-              SizedBox(height: 0.1.sh,),
+                    //Show answer button
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _showAnswer();
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                            fixedSize: Size(0.4.sw, 0.08.sh),
+                            primary: const Color(0xFF000000),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: MY_BORDER_RADIUS)),
+                        child: const Center(
+                          child: Text(
+                            'Show Answer',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )),
 
-              //Question count
-              Text('${_currentQuestion + 1}/${_questionList.length}',style: const TextStyle(fontWeight: FontWeight.bold),),
+                    SizedBox(
+                      height: 0.1.sh,
+                    ),
 
-              SizedBox(height: 0.07.sh,),
+                    //Question count
+                    Text(
+                      '${_currentQuestion + 1}/${_questionList.length}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
 
-              //Navigation buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  createNavButton('Previous', -1),
-                  SizedBox(
-                    width: 0.02.sw,
-                  ),
-                  createNavButton('Next', 1)
-                ],
-              )
-            ],
-          ),
+                    SizedBox(
+                      height: 0.07.sh,
+                    ),
+
+                    //Navigation buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        createNavButton('Previous', -1),
+                        SizedBox(
+                          width: 0.02.sw,
+                        ),
+                        createNavButton('Next', 1)
+                      ],
+                    )
+                  ],
+                ),
         ),
       ),
     );
@@ -118,9 +130,11 @@ class _StudentQuizState extends State<StudentQuiz> {
           SizedBox(
             height: 0.05.sh,
           ),
+
+          //If the question is written, create a text field, else( is MCQ) create options
           (_questionList[_currentQuestion] is WrittenQuestion)
               ? createTextField(TextEditingController(), 3, 200,
-              'Enter your answer', 'Answer')
+                  'Enter your answer', 'Answer')
               : _createChoices(),
         ],
       ));
@@ -128,12 +142,14 @@ class _StudentQuizState extends State<StudentQuiz> {
     return widgetList[_currentQuestion];
   }
 
+  //Create previous and next buttons
   ElevatedButton createNavButton(String s, int direction) {
     return ElevatedButton(
         onPressed: () {
           setState(() {
             if (_currentQuestion + direction < 0 ||
-                _currentQuestion + direction >= _questionList.length) {} else {
+                _currentQuestion + direction >= _questionList.length) {}  //Do nothing if we try to decrement or increment at the edges
+            else {
               _currentQuestion += direction;
             }
           });
@@ -145,7 +161,7 @@ class _StudentQuizState extends State<StudentQuiz> {
         child: Center(
           child: Text(
             s,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ));
   }
@@ -179,6 +195,7 @@ class _StudentQuizState extends State<StudentQuiz> {
     );
   }
 
+  //Creating radio buttons for options
   Row createRadio(int value, String text) {
     return Row(
       children: [
@@ -188,7 +205,6 @@ class _StudentQuizState extends State<StudentQuiz> {
             onChanged: (int? value) {
               setState(() {
                 _choice = value;
-                print(_choice);
               });
             }),
         MyText(text: text),
@@ -196,23 +212,39 @@ class _StudentQuizState extends State<StudentQuiz> {
     );
   }
 
+  //Popup for showing answer
   Future<void> _showAnswer() async {
-    await showDialog(context: context, builder: (BuildContext context) {
-      return SimpleDialog(
-        backgroundColor: Colors.black,
-          title: const Center(child: Text('Answer', style: TextStyle(color: Colors.white),)), children: [
-        Center(child: Padding(
-          padding:  EdgeInsets.fromLTRB(0.01.sw, 0.01.sh, 0.01.sw, 0.07.sh),
-          child: DecoratedBox(
-              decoration: BoxDecoration(borderRadius: MY_BORDER_RADIUS,color: Colors.white),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                    width: 0.5.sw,
-                    child: Text(_questionList[_currentQuestion].answer,style: TextStyle(fontSize: 0.04.sw,color: Colors.black),)),
-              )),
-        ))
-      ],);
-    });
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            backgroundColor: Colors.black,
+            title: const Center(
+                child: Text(
+              'Answer',
+              style: TextStyle(color: Colors.white),
+            )),
+            children: [
+              Center(
+                  child: Padding(
+                padding:
+                    EdgeInsets.fromLTRB(0.01.sw, 0.01.sh, 0.01.sw, 0.07.sh),
+                child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        borderRadius: MY_BORDER_RADIUS, color: Colors.white),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                          width: 0.5.sw,
+                          child: Text(
+                            _questionList[_currentQuestion].answer,
+                            style: TextStyle(
+                                fontSize: 0.04.sw, color: Colors.black),
+                          )),
+                    )),
+              ))
+            ],
+          );
+        });
   }
 }
